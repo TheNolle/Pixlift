@@ -1,0 +1,28 @@
+{
+  "name": "pixlift",
+  "version": "1.0.0",
+  "description": "Pixlift is a sleek, high-performance media hosting and sharing platform designed for instant, flexible, and format-rich media handling. With Pixlift, users can easily upload, convert, resize, and share images and videos in multiple formats with just a few clicks. It’s built to support powerful, on-the-fly media transformations with a clean and intuitive interface, providing creators, developers, and social media enthusiasts a fast, customizable, and efficient media solution.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "react-router-dom": "^6.28.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^4.3.3",
+    "sass": "^1.80.7",
+    "vite-plugin-sass": "^0.1.0"
+  }
+}

@@ -1,0 +1,76 @@
+@use '../colors' as colors;
+
+.page.error {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+
+	.error-content {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		border-radius: 0.5rem;
+		background-image: url('yosemite.jpg');
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: rgba(colors.$bunker, 0.375);
+		}
+
+		h1 {
+			z-index: 1;
+			font-size: 7.5rem;
+			font-weight: bold;
+			letter-spacing: 0.1rem;
+			color: rgba(colors.$alabaster, 0.5);
+		}
+
+		span {
+			z-index: 1;
+			font-size: 1.5rem;
+			margin-bottom: 0.5rem;
+			color: colors.$alabaster;
+		}
+
+		small {
+			z-index: 1;
+			margin-bottom: 1.5rem;
+			color: colors.$silver;
+		}
+
+		a {
+			z-index: 1;
+			padding: 0.5rem 1rem;
+			text-decoration: none;
+			border-radius: 0.25rem;
+			border: 1px solid colors.$alabaster;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.125);
+			transition: color 250ms, background-color 250ms;
+
+			&:hover {
+				color: colors.$bunker;
+				background-color: colors.$alabaster;
+			}
+
+			&:active {
+				color: colors.$alabaster;
+				background-color: colors.$steel-gray;
+			}
+		}
+	}
+}

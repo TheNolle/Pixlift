@@ -1,0 +1,125 @@
+@use '../colors' as colors;
+
+.page.login-register {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	background-color: colors.$steel-gray;
+
+	.left {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+
+		&::after {
+			content: '';
+			width: 100%;
+			height: 100%;
+			border-radius: 0.5rem;
+			background-color: colors.$bunker;
+			background-image: url('mojave.jpeg');
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+
+		a {
+			position: absolute;
+			top: 2rem;
+			right: 2rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			column-gap: 0.5rem;
+			text-decoration: none;
+			padding: 0.5rem;
+			border-radius: 1rem;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+
+			&:hover {
+				background-color: rgba(colors.$alabaster, 0.25);
+			}
+
+			&:active {
+				background-color: rgba(colors.$alabaster, 0.375);
+			}
+		}
+	}
+
+	.right {
+		display: flex;
+		flex-direction: column;
+		padding: 10rem 5rem;
+
+		h1 {
+			margin-bottom: 1rem;
+			font-size: 2.5rem;
+			color: colors.$alabaster;
+		}
+
+		span {
+			display: flex;
+			column-gap: 0.5rem;
+			margin-bottom: 2rem;
+			font-size: 0.875rem;
+			color: colors.$spun-pearl;
+
+			a {
+				color: colors.$perfume;
+				transition: color 250ms;
+
+				&:hover {
+					color: colors.$biloba-flower;
+				}
+			}
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			row-gap: 1rem;
+
+			input {
+				padding: 1rem;
+				font-size: 0.875rem;
+				border-radius: 0.25rem;
+				border: 1px solid transparent;
+				color: colors.$alabaster;
+				background-color: rgba(colors.$alabaster, 0.1);
+				transition: border-color 250ms;
+
+				&:focus {
+					border-color: colors.$east-side;
+				}
+			}
+
+			button {
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				column-gap: 0.5rem;
+				padding: 1rem;
+				font-size: 1rem;
+				border-radius: 0.25rem;
+				border: 1px solid transparent;
+				color: colors.$alabaster;
+				background-color: colors.$blue-violet;
+				transition: border-color 250ms, background-color 250ms;
+
+				&:hover {
+					border-color: colors.$east-side;
+					background-color: colors.$blue-marguerite;
+				}
+
+				&:active {
+					border-color: colors.$blue-marguerite;
+					background-color: colors.$studio;
+				}
+			}
+		}
+	}
+}
