@@ -4,7 +4,7 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 // Pages
-import Home from './pages/Home'
+import Landing from './pages/Landing'
 import LoginRegister from './pages/LoginRegister'
 import Error from './pages/Error'
 
@@ -12,7 +12,7 @@ export default function App(): React.ReactElement {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<Home isLoggedIn={false} />} />
+				<Route path='/' element={<Landing />} />
 				<Route path='/login' element={<LoginRegister mode='login' />} />
 				<Route path='/register' element={<LoginRegister mode='register' />} />
 				<Route path='*' element={<Error errorCode={404} errorMessage='Page not found' errorDetails='The page you are looking for does not exist' />} />

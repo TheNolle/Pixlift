@@ -12,6 +12,10 @@ interface ErrorProps {
 }
 
 export default function Error(props: ErrorProps): React.ReactElement {
+	React.useEffect(() => {
+		document.title = `Error ${props.errorCode} | Pixlift`
+	}, [])
+
 	return (
 		<div className='page error'>
 			<div className='error-content'>

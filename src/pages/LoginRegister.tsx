@@ -22,6 +22,16 @@ export default function LoginRegister(props: LoginRegisterProps): React.ReactEle
 		<div className='page login-register'>
 			<div className='left'>
 				<Link to='/'>Back to website <Fa6.FaArrowRight /></Link>
+
+				<div className='content'>
+					<h1>Welcome to Pixlift</h1>
+					<p>
+						{props.mode === 'login'
+							? 'Log in to your account to access your photos and settings.'
+							: 'Create an account to start uploading your photos and share them with the world.'
+						}
+					</p>
+				</div>
 			</div>
 
 			<div className='right'>

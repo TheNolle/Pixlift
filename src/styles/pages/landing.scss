@@ -1,0 +1,119 @@
+@use '../colors' as colors;
+
+.page.landing {
+	display: grid;
+	grid-template-areas: 'header' 'content';
+	grid-template-rows: 1fr auto;
+
+	.header {
+		grid-area: header;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+
+		&::after {
+			content: '';
+			width: 100%;
+			height: 100%;
+			border-radius: 0.5rem;
+			background-color: colors.$bunker;
+			background-image: url('mojave.jpeg');
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+
+		.header-content {
+			position: absolute;
+			text-align: center;
+			padding: 5rem;
+			border-radius: 0.5rem;
+			border: 1px solid colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+
+			h1 {
+				margin-bottom: -1.5rem;
+				font-size: 10rem;
+			}
+
+			h2 {
+				margin-bottom: 2rem;
+				font-size: 1.75rem;
+			}
+
+			p {
+				width: 100%;
+				max-width: 30rem;
+				color: colors.$silver-chalice;
+			}
+
+			.cta {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				column-gap: 1.25rem;
+				margin-top: 2rem;
+				padding: 1.25rem;
+				border-radius: 0.5rem;
+				background-color: colors.$bunker;
+
+				i {
+					width: 0.5rem;
+					height: 0.5rem;
+					border-radius: 50%;
+					background-color: colors.$silver-sand;
+				}
+
+				a {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					column-gap: 0.5rem;
+					color: colors.$alabaster;
+					text-decoration: none;
+					transition: color 250ms;
+
+					&:hover {
+						color: colors.$silver;
+					}
+				}
+			}
+		}
+
+		.btns {
+			position: absolute;
+			left: 1rem;
+			display: flex;
+			flex-direction: column;
+			row-gap: 0.5rem;
+
+			a {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0.5rem;
+				border-radius: 0 0.5rem 0.5rem 0;
+				color: colors.$alabaster;
+				background-color: colors.$bunker;
+				transition: color 250ms, background-color 250ms;
+
+				&:hover {
+					color: colors.$bunker;
+					background-color: colors.$alabaster;
+				}
+
+				&:active {
+					color: colors.$alabaster;
+					background-color: colors.$silver;
+				}
+			}
+		}
+	}
+
+	.content {
+		grid-area: content;
+	}
+}

@@ -47,6 +47,15 @@
 				background-color: rgba(colors.$alabaster, 0.375);
 			}
 		}
+
+		.content {
+			position: absolute;
+			bottom: 2rem;
+			left: 2rem;
+			display: flex;
+			flex-direction: column;
+			row-gap: 1rem;
+		}
 	}
 
 	.right {
