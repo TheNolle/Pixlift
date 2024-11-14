@@ -2,11 +2,10 @@
 
 .page.landing {
 	display: grid;
-	grid-template-areas: 'header' 'content';
-	grid-template-rows: 1fr auto;
+	grid-template-rows: 100vh auto;
+	overflow-x: hidden;
 
 	.header {
-		grid-area: header;
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -58,7 +57,7 @@
 				margin-top: 2rem;
 				padding: 1.25rem;
 				border-radius: 0.5rem;
-				background-color: colors.$bunker;
+				background-color: colors.$steel-gray;
 
 				i {
 					width: 0.5rem;
@@ -111,9 +110,114 @@
 				}
 			}
 		}
+
+		.scroll-down {
+			cursor: pointer;
+			position: absolute;
+			bottom: 1rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.5rem 0.55rem;
+			font-size: 1.25rem;
+			border-radius: 0.5rem 0.5rem 0 0;
+			color: colors.$alabaster;
+			background-color: colors.$bunker;
+			transition: color 250ms, background-color 250ms;
+
+			svg {
+				animation: scroll-down 2s infinite linear;
+
+				@keyframes scroll-down {
+					0% {
+						transform: translateY(0);
+					}
+
+					40% {
+						transform: translateY(0.25rem);
+					}
+
+					60% {
+						transform: translateY(0.25rem);
+					}
+
+					100% {
+						transform: translateY(0);
+					}
+				}
+			}
+
+			&:hover {
+				color: colors.$bunker;
+				background-color: colors.$alabaster;
+			}
+		}
 	}
 
 	.content {
-		grid-area: content;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.25rem;
+		padding: 2rem 1rem;
+
+		.information-card {
+			position: relative;
+			width: 100%;
+			max-width: 18.0625rem;
+			height: 30.5rem;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-between;
+			row-gap: 0.5rem;
+			text-align: center;
+
+			small {
+				color: colors.$silver-chalice;
+			}
+
+			img {
+				width: 100%;
+				border-radius: 0.5rem;
+				aspect-ratio: 1/1;
+				object-fit: cover;
+			}
+
+			h1 {
+				font-size: 1.625rem;
+			}
+
+			p {
+				font-size: 0.875rem;
+				color: colors.$silver-chalice;
+			}
+
+			.btns {
+				width: 100%;
+				display: grid;
+				grid-template-columns: 1fr auto auto;
+				column-gap: 0.5rem;
+				padding: 0.5rem;
+
+				button {
+					cursor: pointer;
+					padding: 0.5rem;
+					border-radius: 0.5rem;
+					color: colors.$alabaster;
+					background-color: colors.$steel-gray;
+					transition: color 250ms, background-color 250ms;
+
+					&:hover {
+						color: colors.$alabaster;
+						background-color: colors.$mid-gray;
+					}
+
+					&:active {
+						color: colors.$bunker;
+						background-color: colors.$silver;
+					}
+				}
+			}
+		}
 	}
 }
