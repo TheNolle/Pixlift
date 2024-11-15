@@ -5,6 +5,7 @@ import '../styles/pages/landing.scss'
 // Components
 import { Link } from 'react-router-dom'
 import * as Fa6 from 'react-icons/fa6'
+import Modal from '../components/Modal'
 
 export default function Landing(): React.ReactElement {
 	const contentRef = React.useRef<HTMLDivElement>(null)
@@ -49,47 +50,63 @@ export default function Landing(): React.ReactElement {
 			<main className='content' ref={contentRef}>
 				<InformationCard
 					categoy='Core Capability'
-					image='mojave.jpeg'
-					title='Flexible Image & Video Uploading'
-					description='Quick, hassle-free uploads with support for various media formats, enabling easy sharing for all users.'
+					image='yosemite.jpg'
+					title='Flexible Media Uploading'
+					description='Quick and hassle-free uploads with support for diverse media formats.'
 					buttons={{
-						large: { label: 'Learn More' },
-						small1: { icon: <Fa6.FaMagnifyingGlass /> },
-						small2: { icon: <Fa6.FaUpload /> }
+						large: { label: 'Learn More', openModal: true }
 					}}
+					modalContent={<>
+						<h2>Flexible Media Uploading</h2>
+						<p>Upload images and videos seamlessly, with support for multiple file types like JPEG, PNG, GIF, MP4, and more.</p>
+						<p>Our intuitive interface ensures your media is uploaded and ready for sharing or transformation in seconds.</p>
+						<p>Whether you're a creator or developer, Pixlift provides a smooth, flexible uploading experience.</p>
+					</>}
 				/>
 				<InformationCard
 					categoy='Automatic Conversion'
-					image='mojave.jpeg'
+					image='sierra.jpg'
 					title='Automatic Format Conversion'
-					description='Convert images and videos into multiple formats effortlessly upon upload, allowing flexibility in sharing.'
+					description='Convert media into multiple formats instantly upon upload.'
 					buttons={{
-						large: { label: 'Try This Feature' },
-						small1: { icon: <Fa6.FaMagnifyingGlass /> },
-						small2: { icon: <Fa6.FaUpload /> }
+						large: { label: 'Try This Feature', openModal: true }
 					}}
+					modalContent={<>
+						<h2>Automatic Format Conversion</h2>
+						<p>Transform your images and videos into different formats without any hassle.</p>
+						<p>With Pixlift, all format changes are handled automatically, enabling effortless sharing across platforms.</p>
+						<p>Supported conversions include common formats like PNG, JPG, WebP, GIF, MP4, and more.</p>
+					</>}
 				/>
 				<InformationCard
 					categoy='Advanced Options'
 					image='mojave.jpeg'
 					title='On-the-Fly Resizing'
-					description='Adjust dimensions instantly via URL parameters to fit various display needs without altering the original file.'
+					description='Resize images dynamically via URL parameters.'
 					buttons={{
-						large: { label: 'Start Now' },
-						small1: { icon: <Fa6.FaMagnifyingGlass /> },
-						small2: { icon: <Fa6.FaUpload /> }
+						large: { label: 'Start Now', openModal: true }
 					}}
+					modalContent={<>
+						<h2>On-the-Fly Resizing</h2>
+						<p>Adjust dimensions instantly without affecting the original file.</p>
+						<p>Simply append size parameters to the URL for responsive image transformations.</p>
+						<p>Example: <code>https://pixlift.com/media/&#x7b;id&#x7d;?size=800x600</code></p>
+					</>}
 				/>
 				<InformationCard
 					categoy='Quality Control'
-					image='mojave.jpeg'
+					image='yosemite.jpg'
 					title='Quality Control Adjustments'
-					description='Easily adjust fidelity and resolution through URL settings, enabling sharper or more compact images as needed.'
+					description='Easily fine-tune fidelity and resolution for optimized media.'
 					buttons={{
-						large: { label: 'Learn More' },
-						small1: { icon: <Fa6.FaMagnifyingGlass /> },
-						small2: { icon: <Fa6.FaUpload /> }
+						large: { label: 'Learn More', openModal: true }
 					}}
+					modalContent={<>
+						<h2>Quality Control Adjustments</h2>
+						<p>Optimize your media’s fidelity and resolution using simple URL parameters.</p>
+						<p>Choose between high fidelity for crisp visuals or lower fidelity for quicker load times.</p>
+						<p>Example: <code>https://pixlift.com/media/&#x7b;id&#x7d;?fidelity=low&maxwidth=1200</code></p>
+					</>}
 				/>
 			</main>
 		</div>
@@ -102,15 +119,18 @@ interface InformationCardProps {
 	image: string
 	title: string
 	description: string
+	modalContent?: React.ReactNode
 	buttons?: {
-		large: { label: string, callback?: () => void },
-		small1?: { icon: React.ReactNode, callback?: () => void },
-		small2?: { icon: React.ReactNode, callback?: () => void },
+		large: { label: string, callback?: () => void, openModal?: boolean },
+		small1?: { icon: React.ReactNode, callback?: () => void, openModal?: boolean },
+		small2?: { icon: React.ReactNode, callback?: () => void, openModal?: boolean }
 	}
 }
 
 function InformationCard(props: InformationCardProps): React.ReactElement {
-	return (
+	const [modalShow, setModalShow] = React.useState<boolean>(false)
+
+	return <>
 		<div className='information-card'>
 			<small>{props.categoy}</small>
 			<img src={props.image} alt={props.title} />
@@ -118,11 +138,16 @@ function InformationCard(props: InformationCardProps): React.ReactElement {
 			<p>{props.description}</p>
 			<div className='btns'>
 				{props.buttons && <>
-					{props.buttons.large && <button onClick={props.buttons.large.callback}>{props.buttons.large.label}</button>}
-					{props.buttons.small1 && <button onClick={props.buttons.small1.callback}>{props.buttons.small1.icon}</button>}
-					{props.buttons.small2 && <button onClick={props.buttons.small2.callback}>{props.buttons.small2.icon}</button>}
+					{props.buttons.large && <button onClick={props.buttons.large.openModal && props.modalContent ? () => setModalShow(true) : props.buttons.large.callback}>{props.buttons.large.label}</button>}
+					{props.buttons.small1 && <button onClick={props.buttons.small1.openModal && props.modalContent ? () => setModalShow(true) : props.buttons.small1.callback}>{props.buttons.small1.icon}</button>}
+					{props.buttons.small2 && <button onClick={props.buttons.small2.openModal && props.modalContent ? () => setModalShow(true) : props.buttons.small2.callback}>{props.buttons.small2.icon}</button>}
 				</>}
 			</div>
 		</div>
-	)
+
+
+		<Modal title='Quality Control Adjustments' show={modalShow} onClose={() => setModalShow(false)}>
+			{props.modalContent}
+		</Modal>
+	</>
 }

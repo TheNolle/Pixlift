@@ -1,0 +1,82 @@
+@use '../colors' as colors;
+
+.page.about {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+
+	&::after {
+		content: '';
+		width: 100%;
+		height: 100%;
+		border-radius: 0.5rem;
+		background-color: colors.$bunker;
+		background-image: url('coffee.jpeg');
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+
+	.container {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		padding: 1.5rem;
+
+		.left {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+		}
+
+		.right {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			justify-content: center;
+		}
+
+		section {
+			width: 100%;
+			max-width: 60rem;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			padding: 1rem;
+
+			h1 {
+				margin-bottom: 1rem;
+				font-size: 3rem;
+				text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+				color: colors.$alabaster;
+			}
+
+			h3 {
+				margin-bottom: 1rem;
+				font-size: 1.5rem;
+				text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+				color: colors.$alabaster;
+			}
+
+			p {
+				font-size: 1rem;
+				text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+				color: colors.$alice-blue;
+			}
+
+			small {
+				font-size: 0.75rem;
+				text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+				color: colors.$alice-blue;
+			}
+		}
+	}
+}
