@@ -51,7 +51,7 @@ export default function About(): React.ReactElement {
 								collapsible
 							/>
 							<Section
-								sectionTitle='Copyright and Owndership'
+								sectionTitle='Copyright and Ownership'
 								sectionContent="All media uploaded to Pixlift remains the property of the original creator. Pixlift claims no ownership over any media uploaded by users. By uploading media to Pixlift, you grant Pixlift the right to store, process, and share your media files as needed to provide our services. You also grant other users the right to view and share your media files as permitted by Pixlift's privacy settings."
 								collapsible
 							/>
