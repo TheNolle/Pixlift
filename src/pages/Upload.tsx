@@ -6,6 +6,10 @@ import '../styles/pages/upload.scss'
 import { Link } from 'react-router-dom'
 import * as Fa6 from 'react-icons/fa6'
 
+const MAX_FILE_SIZE_MB = 50
+const MAX_FILES = 10
+const MAX_FILE_NAME_LENGTH = 48
+
 const generatePassword = (): string => {
 	return Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)
 }
@@ -13,11 +17,40 @@ const generatePassword = (): string => {
 const generateRandomName = (originalName: string): string => {
 	const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 	const randomName = Array.from({ length: 24 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('')
-	return originalName.length > 24 || !/^[a-zA-Z0-9`\-_+.]+$/.test(originalName.split('.').slice(0, -1).join('.')) ? `${randomName}.${originalName.split('.').pop()}` : originalName
+	return originalName.length > MAX_FILE_NAME_LENGTH || !/^[a-zA-Z0-9`\-_+.]+$/.test(originalName.split('.').slice(0, -1).join('.')) ? `${randomName}.${originalName.split('.').pop()}` : originalName
 }
 
-const MAX_FILE_SIZE_MB = 50
-const MAX_FILES = 5
+const getFileSize = (file: File): string => {
+	let fileSize = file.size
+	const units = ['B', 'KB', 'MB', 'GB', 'TB']
+
+	let i = 0
+	while (fileSize >= 1024 && i < units.length - 1) {
+		fileSize /= 1024
+		i++
+	}
+
+	return `${fileSize.toFixed(2)} ${units[i]}`
+}
+
+const getFileIcon = (file: File): React.ReactNode => {
+	const fileType = file.type
+	const fileExtension = file.name.split('.').pop()?.toLowerCase()
+
+	const imageAnimatedExtensions = ['apng', 'gif', 'webp']
+
+	if (fileType.startsWith('image')) {
+		if (fileExtension && imageAnimatedExtensions.includes(fileExtension)) {
+			return <Fa6.FaFileVideo />
+		} else {
+			return <Fa6.FaImage />
+		}
+	} else if (fileType.startsWith('video')) {
+		return <Fa6.FaVideo />
+	} else {
+		return <Fa6.FaFile />
+	}
+}
 
 export default function Upload(): React.ReactElement {
 	const [files, setFiles] = React.useState<File[]>([])
@@ -133,6 +166,8 @@ export default function Upload(): React.ReactElement {
 					<div className='file-preview'>
 						{files.map((file, index) => (
 							<div className='file-card' key={index} title='Click to zoom' onClick={() => handleZoomToggle(file)}>
+								<span className='file-size' title={getFileSize(file)}>{getFileSize(file)}</span>
+								<span className='file-type' title={file.type}>{getFileIcon(file)}</span>
 								{file.type.startsWith('image') ? <img src={URL.createObjectURL(file)} alt='Preview' /> : file.type.startsWith('video') || file.type === 'video/webm' ? <video src={URL.createObjectURL(file)} /> : <div className='file-icon'><Fa6.FaFile /></div>}
 								<div className='file-info'>
 									<small title={file.name}>{file.name}</small>
@@ -149,20 +184,20 @@ export default function Upload(): React.ReactElement {
 							<label><input type='radio' name='privacy' value='private' checked={privacy === 'private'} onChange={() => setPrivacy('private')} /> Private</label>
 							<label><input type='radio' name='privacy' value='password-protected' checked={privacy === 'password-protected'} onChange={() => setPrivacy('password-protected')} /> Password Protected</label>
 						</div>
-					</div>
 
-					{privacy === 'password-protected' && (
-						<div className='password-settings'>
-							<label>
-								<span>Password:</span>
-								<div className='password-input'>
-									<input type={passwordVisible ? 'text' : 'password'} value={generatedPassword} onChange={(e) => setGeneratedPassword(e.target.value)} />
-									<button type='button' onClick={() => setPasswordVisible((prev) => !prev)} title={passwordVisible ? 'Hide Password' : 'Show Password'}>{passwordVisible ? <Fa6.FaEyeSlash /> : <Fa6.FaEye />}</button>
-									<button type='button' onClick={handleCopyPassword} title='Copy Password'><Fa6.FaCopy /></button>
-								</div>
-							</label>
-						</div>
-					)}
+						{privacy === 'password-protected' && (
+							<div className='password-settings'>
+								<label>
+									<span>Password:</span>
+									<div className='password-input'>
+										<input type={passwordVisible ? 'text' : 'password'} value={generatedPassword} onChange={(e) => setGeneratedPassword(e.target.value)} />
+										<button type='button' onClick={() => setPasswordVisible((prev) => !prev)} title={passwordVisible ? 'Hide Password' : 'Show Password'}>{passwordVisible ? <Fa6.FaEyeSlash /> : <Fa6.FaEye />}</button>
+										<button type='button' onClick={handleCopyPassword} title='Copy Password'><Fa6.FaCopy /></button>
+									</div>
+								</label>
+							</div>
+						)}
+					</div>
 
 					<button type='button' className='upload-btn' onClick={handleUpload}>Upload <Fa6.FaArrowUpFromBracket /></button>
 				</form>

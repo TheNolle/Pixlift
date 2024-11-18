@@ -1,18 +1,27 @@
 @use '../colors' as colors;
 
 .page.upload {
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	row-gap: 2rem;
 	padding: 2rem;
 	background-color: colors.$bunker;
 
 	.header {
-		display: flex;
+		display: grid;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: 2rem;
+		grid-template-columns: 1fr auto;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		background-color: rgba(colors.$alabaster, 0.1);
+		background-image: url('mojave.jpeg');
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
 
 		.back-btn {
+			width: fit-content;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -43,235 +52,263 @@
 		flex-direction: column;
 		gap: 2rem;
 
-		.drop-area {
-			min-height: 15rem;
-			display: flex;
-			border-radius: 0.5rem;
-			border: 2px dashed colors.$silver;
-			background-color: rgba(colors.$alabaster, 0.05);
-			transition: border-color 250ms, background-color 250ms;
+		form {
+			flex: 1;
+			display: grid;
+			grid-template-rows: 1fr repeat(5, auto);
 
-			&.active {
-				border-color: colors.$mid-gray;
-				background-color: rgba(colors.$alabaster, 0.1);
-			}
-
-			.file-upload {
-				flex: 1;
-				cursor: pointer;
+			.drop-area {
+				min-height: 15rem;
 				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				gap: 0.5rem;
-				color: colors.$alabaster;
-
-				input {
-					display: none;
-				}
-
-				div {
-					font-size: 1.125rem;
-					text-align: center;
-				}
-
-				svg {
-					font-size: 2rem;
-				}
-			}
-		}
-
-		.album-info {
-			margin-top: 0.5rem;
-			font-size: 0.875rem;
-			color: colors.$silver;
-		}
-
-		.file-preview {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 1rem;
-			margin: 1rem 0;
-
-			.file-card {
-				position: relative;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: space-between;
-				width: 8rem;
-				height: 10rem;
-				padding: 0.5rem;
 				border-radius: 0.5rem;
+				border: 2px dashed colors.$silver;
 				background-color: rgba(colors.$alabaster, 0.05);
-				box-shadow: 0 0 0.25rem rgba(colors.$bunker, 0.1);
-				transition: box-shadow 250ms, transform 250ms;
+				transition: border-color 250ms, background-color 250ms;
 
-				&:hover {
-					box-shadow: 0 0 0.5rem rgba(colors.$bunker, 0.25);
-					transform: scale(1.05);
+				&.active {
+					border-color: colors.$mid-gray;
+					background-color: rgba(colors.$alabaster, 0.1);
 				}
 
-				img,
-				video {
-					width: 100%;
-					height: 7rem;
-					object-fit: cover;
-					border-radius: 0.25rem;
-					background-color: colors.$steel-gray;
-				}
-
-				.file-icon {
-					width: 100%;
-					height: 7rem;
+				.file-upload {
+					flex: 1;
+					cursor: pointer;
 					display: flex;
+					flex-direction: column;
 					align-items: center;
 					justify-content: center;
-					font-size: 2rem;
-					color: colors.$silver;
-					border-radius: 0.25rem;
-					background-color: colors.$steel-gray;
-				}
-
-				.file-info {
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					width: 100%;
-					margin-top: 0.5rem;
-
-					small {
-						color: colors.$alabaster;
-						font-size: 0.75rem;
-						text-overflow: ellipsis;
-						white-space: nowrap;
-						overflow: hidden;
-						max-width: calc(100% - 2rem);
-					}
-
-					button {
-						cursor: pointer;
-						padding: 0.25rem;
-						border-radius: 0.25rem;
-						color: colors.$alabaster;
-						background-color: rgba(colors.$alabaster, 0.1);
-						transition: background-color 250ms, transform 100ms;
-
-						&:hover {
-							background-color: rgba(colors.$alabaster, 0.25);
-						}
-
-						&:active {
-							transform: scale(0.9);
-						}
-					}
-				}
-			}
-		}
-
-		.privacy-settings {
-			display: flex;
-			flex-direction: column;
-			row-gap: 1rem;
-			margin-top: 1rem;
-			margin-bottom: 1rem;
-
-			h2 {
-				font-size: 1.25rem;
-				color: colors.$alabaster;
-			}
-
-			div {
-				display: flex;
-				column-gap: 2rem;
-
-				label {
-					display: flex;
-					align-items: center;
+					gap: 0.5rem;
 					color: colors.$alabaster;
 
 					input {
-						margin-right: 0.5rem;
+						display: none;
+					}
+
+					div {
+						font-size: 1.125rem;
+						text-align: center;
+					}
+
+					svg {
+						font-size: 2rem;
 					}
 				}
 			}
-		}
 
-		.password-settings {
-			display: flex;
-			flex-direction: column;
-			row-gap: 1rem;
-			margin-bottom: 1rem;
+			.album-info {
+				font-size: 0.875rem;
+				color: colors.$silver;
+			}
 
-			label {
+			.file-preview {
 				display: flex;
-				flex-direction: column;
-				color: colors.$alabaster;
+				flex-wrap: wrap;
+				gap: 1rem;
+				margin: 1rem 0;
 
-				.password-input {
+				.file-card {
+					cursor: pointer;
+					position: relative;
 					display: flex;
+					flex-direction: column;
 					align-items: center;
+					justify-content: space-between;
+					width: 8rem;
+					height: 10rem;
+					padding: 0.5rem;
+					border-radius: 0.5rem;
+					background-color: rgba(colors.$alabaster, 0.05);
+					box-shadow: 0 0 0.25rem rgba(colors.$bunker, 0.1);
+					transition: box-shadow 250ms, transform 250ms;
 
-					input {
-						padding: 0.5rem;
-						flex: 1;
-						border-radius: 0.25rem;
-						border: 1px solid colors.$silver;
-						color: colors.$alabaster;
-						background-color: rgba(colors.$alabaster, 0.1);
-
-						&:focus {
-							border-color: colors.$mid-gray;
-						}
+					&:hover {
+						box-shadow: 0 0 0.5rem rgba(colors.$alabaster, 0.25);
+						transform: scale(1.05);
 					}
 
-					button {
-						cursor: pointer;
+					.file-size {
+						position: absolute;
+						top: 0;
+						right: 0;
+						font-size: 0.75rem;
+						padding: 0.25rem;
+						border-radius: 0.25rem;
+						color: colors.$alabaster;
+						background-color: rgba(colors.$bunker, 0.5);
+					}
+
+					.file-type {
+						position: absolute;
+						top: 0;
+						left: 0;
+						font-size: 0.75rem;
+						padding: 0.25rem;
+						border-radius: 0.25rem;
+						color: colors.$alabaster;
+						background-color: rgba(colors.$bunker, 0.5);
+					}
+
+					img,
+					video {
+						width: 100%;
+						height: 7rem;
+						object-fit: cover;
+						border-radius: 0.25rem;
+						background-color: colors.$steel-gray;
+					}
+
+					.file-icon {
+						width: 100%;
+						height: 7rem;
 						display: flex;
 						align-items: center;
 						justify-content: center;
-						margin-left: 0.5rem;
-						padding: 0.5rem;
+						font-size: 2rem;
+						color: colors.$silver;
 						border-radius: 0.25rem;
-						color: colors.$alabaster;
-						background-color: colors.$bunker;
-						transition: background-color 250ms;
+						background-color: colors.$steel-gray;
+					}
 
-						&:hover {
-							background-color: colors.$mid-gray;
+					.file-info {
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						width: 100%;
+
+						small {
+							color: colors.$alabaster;
+							font-size: 0.75rem;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							overflow: hidden;
+							max-width: calc(100% - 2rem);
 						}
 
-						&:active {
-							background-color: colors.$steel-gray;
+						button {
+							cursor: pointer;
+							padding: 0.25rem;
+							border-radius: 0.25rem;
+							color: colors.$alabaster;
+							background-color: rgba(colors.$alabaster, 0.1);
+							transition: background-color 250ms, transform 100ms;
+
+							&:hover {
+								background-color: rgba(colors.$alabaster, 0.25);
+							}
+
+							&:active {
+								transform: scale(0.9);
+							}
 						}
 					}
 				}
 			}
-		}
 
-		.upload-btn {
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 1rem;
-			border-radius: 0.25rem;
-			font-size: 1rem;
-			color: colors.$alabaster;
-			background-color: colors.$steel-gray;
-			transition: color 250ms, background-color 250ms;
+			.privacy-settings {
+				display: flex;
+				flex-direction: column;
+				row-gap: 1rem;
+				margin-bottom: 1rem;
+				padding: 1rem;
+				border-radius: 0.5rem;
+				background-color: rgba(colors.$alabaster, 0.05);
+				background-image: url('sand-dunes.jpeg');
+				background-position: center;
+				background-size: cover;
+				background-repeat: no-repeat;
 
-			svg {
-				margin-left: 0.5rem;
+				h2 {
+					font-size: 1.25rem;
+					color: colors.$alabaster;
+				}
+
+				div {
+					display: flex;
+					column-gap: 2rem;
+
+					label {
+						display: flex;
+						align-items: center;
+						color: colors.$alabaster;
+
+						input {
+							margin-right: 0.5rem;
+						}
+					}
+				}
+
+				.password-settings {
+					display: flex;
+
+					label {
+						flex: 1;
+						display: grid;
+						grid-template-columns: auto 1fr;
+						column-gap: 1rem;
+						color: colors.$alabaster;
+
+						.password-input {
+							display: grid;
+							grid-template-columns: 1fr auto auto;
+							column-gap: 0.5rem;
+
+							input {
+								padding: 0.5rem;
+								border-radius: 0.25rem;
+								border: 1px solid colors.$silver;
+								color: colors.$alabaster;
+								background-color: rgba(colors.$alabaster, 0.1);
+
+								&:focus {
+									border-color: colors.$mid-gray;
+								}
+							}
+
+							button {
+								cursor: pointer;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								padding: 0.5rem;
+								border-radius: 0.25rem;
+								color: colors.$alabaster;
+								background-color: colors.$bunker;
+								transition: background-color 250ms;
+
+								&:hover {
+									background-color: colors.$mid-gray;
+								}
+
+								&:active {
+									background-color: colors.$steel-gray;
+								}
+							}
+						}
+					}
+				}
 			}
 
-			&:hover {
-				background-color: colors.$mid-gray;
-			}
+			.upload-btn {
+				cursor: pointer;
+				display: flex;
+				justify-content: center;
+				column-gap: 0.5rem;
+				padding: 1rem;
+				font-size: 1rem;
+				letter-spacing: 0.1rem;
+				border-radius: 0.25rem;
+				color: colors.$alabaster;
+				background-color: colors.$steel-gray;
+				transition: color 250ms, background-color 250ms;
 
-			&:active {
-				color: colors.$bunker;
-				background-color: colors.$silver;
+				&:hover {
+					background-color: colors.$mid-gray;
+				}
+
+				&:active {
+					color: colors.$bunker;
+					background-color: colors.$silver;
+				}
 			}
 		}
 	}
