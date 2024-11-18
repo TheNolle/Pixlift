@@ -93,9 +93,20 @@ export default function Gallery(): React.ReactElement {
 	const [selectedMediaIndex, setSelectedMediaIndex] = React.useState<number | null>(null)
 	const [isLoading, setIsLoading] = React.useState<boolean>(false)
 	const [useInfiniteScroll, setUseInfiniteScroll] = React.useState<boolean>(false)
+	const [isAnimating, setIsAnimating] = React.useState<boolean>(false)
 
 	const searchInputRef = React.useRef<HTMLInputElement>(null)
 	const observer = React.useRef<IntersectionObserver | null>(null)
+
+	React.useEffect(() => {
+		if (isLoading) {
+			setIsAnimating(true)
+			return () => setIsAnimating(false)
+		} else {
+			const animationTimeout = setTimeout(() => setIsAnimating(false), 500)
+			return () => clearTimeout(animationTimeout)
+		}
+	}, [isLoading])
 
 	React.useEffect(() => {
 		document.title = 'Gallery | Pixlift'
@@ -223,7 +234,7 @@ export default function Gallery(): React.ReactElement {
 		: filteredMedia.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
 	return (
-		<div className='page gallery' role='main' aria-labelledby='gallery-title'>
+		<div className={`page gallery ${isAnimating ? 'animating' : ''}`} role='main' aria-labelledby='gallery-title'>
 			<header className='header' role='banner'>
 				<div className='controls'>
 					<Link to='/' className='back-btn' aria-label='Go back to website'><Fa6.FaArrowLeft /> Back to website</Link>
@@ -293,7 +304,7 @@ export default function Gallery(): React.ReactElement {
 							</div>
 						) : (
 							<>
-								<div className='media-grid' role='grid' aria-label='Media grid with images and videos'>
+								<div className={`media-grid ${isAnimating ? 'fade-in' : ''}`} role='grid' aria-label='Media grid with images and videos'>
 									{paginatedMedia.map((media, index) => (
 										<div
 											className={`media-card ${index === selectedMediaIndex ? 'selected' : ''}`}

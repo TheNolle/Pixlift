@@ -6,6 +6,12 @@
 	padding: 2rem;
 	background-color: colors.$bunker;
 
+	&.animating {
+		.media-grid {
+			animation: fade-in 0.5s ease-out;
+		}
+	}
+
 	.header {
 		display: flex;
 		align-items: center;
@@ -123,13 +129,14 @@
 			border: none;
 			color: colors.$alabaster;
 			background-color: rgba(colors.$alabaster, 0.1);
-			transition: background-color 250ms, transform 100ms;
+			transition: transform 250ms ease, background-color 250ms, transform 100ms;
 
 			&.active {
 				background-color: colors.$mid-gray;
 			}
 
 			&:hover {
+				transform: translateY(-2px);
 				background-color: rgba(colors.$alabaster, 0.25);
 			}
 
@@ -205,7 +212,8 @@
 			border-radius: 0.5rem;
 			background-color: rgba(colors.$alabaster, 0.05);
 			box-shadow: 0 0 0.25rem rgba(colors.$bunker, 0.1);
-			transition: box-shadow 250ms, transform 250ms;
+			animation: slide-in 0.3s ease-out;
+			transition: box-shadow 250ms, transform 250ms ease;
 			cursor: pointer;
 
 			&:hover {
@@ -279,9 +287,10 @@
 			border-radius: 0.5rem;
 			color: colors.$alabaster;
 			background-color: rgba(colors.$alabaster, 0.1);
-			transition: background-color 250ms, transform 100ms;
+			transition: transform 250ms ease, background-color 250ms;
 
 			&:hover:not(:disabled) {
+				transform: translateY(-2px);
 				background-color: rgba(colors.$alabaster, 0.25);
 			}
 
@@ -408,5 +417,27 @@
 
 	.sr-only {
 		display: none;
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slide-in {
+	from {
+		transform: translateY(10px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
 	}
 }
