@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom'
 import * as Fa6 from 'react-icons/fa6'
 
 export default function About(): React.ReactElement {
+	React.useEffect(() => {
+		document.title = 'About | Pixlift'
+	}, [])
+
 	return (
 		<div className='page about'>
 			<Link to='/' className='back-btn'><Fa6.FaArrowLeft /> Back to website</Link>
