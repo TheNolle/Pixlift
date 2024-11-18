@@ -13,10 +13,35 @@
 		height: 100%;
 		border-radius: 0.5rem;
 		background-color: colors.$bunker;
-		background-image: url('coffee.jpeg');
+		background-image: url('sand-dunes.jpeg');
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
+		filter: brightness(0.875);
+	}
+
+	.back-btn {
+		z-index: 2;
+		position: absolute;
+		top: 1.5rem;
+		left: 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		column-gap: 0.5rem;
+		text-decoration: none;
+		padding: 0.5rem;
+		border-radius: 0.25rem;
+		color: colors.$alabaster;
+		background-color: rgba(colors.$alabaster, 0.1);
+
+		&:hover {
+			background-color: rgba(colors.$alabaster, 0.25);
+		}
+
+		&:active {
+			background-color: rgba(colors.$alabaster, 0.375);
+		}
 	}
 
 	.container {
@@ -29,53 +54,121 @@
 		justify-content: space-between;
 		padding: 1.5rem;
 
-		.left {
+		div {
 			display: flex;
 			flex-direction: column;
-			align-items: flex-start;
 			justify-content: center;
-		}
 
-		.right {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-end;
-			justify-content: center;
-		}
+			&.left {
+				align-items: flex-start;
 
-		section {
-			width: 100%;
-			max-width: 60rem;
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			justify-content: center;
-			padding: 1rem;
+				section,
+				details {
 
-			h1 {
-				margin-bottom: 1rem;
-				font-size: 3rem;
-				text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
-				color: colors.$alabaster;
+					h1,
+					summary {
+						font-size: 1.5rem;
+					}
+
+					p,
+					ul {
+						font-size: 0.875rem;
+					}
+				}
 			}
 
-			h3 {
-				margin-bottom: 1rem;
-				font-size: 1.5rem;
-				text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
-				color: colors.$alabaster;
+			&.right {
+				align-items: flex-end;
+
+				section,
+				details {
+
+					h1,
+					summary {
+						font-size: 3rem;
+					}
+
+					p,
+					ul {
+						font-size: 1rem;
+					}
+				}
 			}
 
-			p {
-				font-size: 1rem;
-				text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
-				color: colors.$alice-blue;
-			}
+			section,
+			details {
+				width: 100%;
+				max-width: 50rem;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: center;
+				padding: 1rem;
 
-			small {
-				font-size: 0.75rem;
-				text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
-				color: colors.$alice-blue;
+				&[open] {
+					summary {
+						&::marker {
+							content: '▼  ';
+						}
+					}
+				}
+
+				h1,
+				summary {
+					text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+					color: colors.$alabaster;
+				}
+
+				summary {
+					cursor: pointer;
+
+					&::marker {
+						content: '▶  ';
+						color: colors.$alabaster;
+					}
+
+					&:hover,
+					&:active {
+						color: colors.$albescent-white;
+
+						&::marker {
+							color: colors.$albescent-white;
+						}
+					}
+				}
+
+				p,
+				ul {
+					text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+					list-style: none;
+					color: colors.$alice-blue;
+
+					a {
+						color: colors.$albescent-white;
+						text-decoration: none;
+
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+
+					li {
+						position: relative;
+						margin-bottom: 0.25rem;
+						margin-left: 1rem;
+
+						&::before {
+							content: '';
+							position: absolute;
+							top: 50%;
+							left: -0.5rem;
+							transform: translateY(-50%);
+							width: 0.125rem;
+							height: 0.125rem;
+							background-color: colors.$alabaster;
+						}
+					}
+				}
 			}
 		}
 	}
