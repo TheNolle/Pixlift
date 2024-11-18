@@ -10,9 +10,10 @@ const generatePassword = (): string => {
 	return Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)
 }
 
-const generateRandomName = (): string => {
+const generateRandomName = (originalName: string): string => {
 	const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-	return Array.from({ length: 16 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('')
+	const randomName = Array.from({ length: 24 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('')
+	return originalName.length > 24 || !/^[a-zA-Z0-9`\-_+.]+$/.test(originalName.split('.').slice(0, -1).join('.')) ? `${randomName}.${originalName.split('.').pop()}` : originalName
 }
 
 const MAX_FILE_SIZE_MB = 50
@@ -48,7 +49,7 @@ export default function Upload(): React.ReactElement {
 			if (file.size > maxFileSizeBytes) {
 				alert(`File '${file.name}' exceeds the maximum size of ${MAX_FILE_SIZE_MB}MB and was ignored.`)
 			} else {
-				const renamedFile = new File([file], `${generateRandomName()}.${file.name.split('.').pop()}`, { type: file.type })
+				const renamedFile = new File([file], generateRandomName(file.name), { type: file.type })
 				validFiles.push(renamedFile)
 			}
 		})
