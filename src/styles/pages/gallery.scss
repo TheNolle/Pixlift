@@ -1,0 +1,241 @@
+@use '../colors' as colors;
+
+.page.gallery {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	background-color: colors.$bunker;
+
+	.header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 2rem;
+
+		.back-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			column-gap: 0.5rem;
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			text-decoration: none;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+
+			&:hover {
+				background-color: rgba(colors.$alabaster, 0.25);
+			}
+
+			&:active {
+				background-color: rgba(colors.$alabaster, 0.375);
+			}
+		}
+
+		h1 {
+			font-size: 2rem;
+			color: colors.$alabaster;
+		}
+
+		.search-btn {
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			column-gap: 0.5rem;
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+			transition: background-color 250ms;
+
+			&:hover {
+				background-color: rgba(colors.$alabaster, 0.25);
+			}
+
+			&:active {
+				background-color: rgba(colors.$alabaster, 0.375);
+			}
+		}
+	}
+
+	.filters {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+
+		.filter-btn {
+			cursor: pointer;
+			padding: 0.5rem 1rem;
+			border-radius: 0.5rem;
+			border: none;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+			transition: background-color 250ms, transform 100ms;
+
+			&.active {
+				background-color: colors.$mid-gray;
+			}
+
+			&:hover {
+				background-color: rgba(colors.$alabaster, 0.25);
+			}
+
+			&:active {
+				transform: scale(0.95);
+			}
+		}
+	}
+
+	.media-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, 200px);
+		gap: 1rem;
+
+		.media-card {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			max-width: 200px;
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			background-color: rgba(colors.$alabaster, 0.05);
+			box-shadow: 0 0 0.25rem rgba(colors.$bunker, 0.1);
+			transition: box-shadow 250ms, transform 250ms;
+			cursor: pointer;
+
+			&:hover {
+				box-shadow: 0 0 0.5rem rgba(colors.$mid-gray, 0.25);
+				transform: scale(1.05);
+			}
+
+			img,
+			video {
+				width: 100%;
+				height: auto;
+				object-fit: cover;
+				border-radius: 0.25rem;
+				background-color: colors.$steel-gray;
+			}
+
+			.media-info {
+				margin-top: 0.5rem;
+
+				small {
+					color: colors.$alabaster;
+					font-size: 0.75rem;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+					max-width: 100%;
+				}
+			}
+		}
+	}
+
+	.zoom-preview {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(colors.$bunker, 0.85);
+		z-index: 10;
+
+		img,
+		video {
+			min-width: 25%;
+			min-height: 25%;
+			max-width: 90%;
+			max-height: 90%;
+			border-radius: 0.5rem;
+			box-shadow: 0 0 1rem rgba(colors.$alabaster, 0.5);
+		}
+	}
+
+	.powerbar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		z-index: 20;
+
+		.overlay {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(colors.$bunker, 0.85);
+		}
+
+		.powerbar-content {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			max-width: 600px;
+			margin: 1rem;
+			padding: 1rem;
+			border-radius: 0.5rem;
+			background-color: colors.$steel-gray;
+			box-shadow: 0 0 1rem rgba(colors.$bunker, 0.5);
+
+			input {
+				width: 100%;
+				padding: 0.75rem;
+				margin-bottom: 0.5rem;
+				border-radius: 0.25rem;
+				border: 1px solid colors.$silver;
+				color: colors.$alabaster;
+				background-color: rgba(colors.$alabaster, 0.1);
+
+				&:focus {
+					outline: none;
+					border-color: colors.$mid-gray;
+				}
+			}
+
+			ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				overflow-y: auto;
+				max-height: 300px;
+
+				li {
+					cursor: pointer;
+					display: flex;
+					align-items: center;
+					padding: 0.5rem;
+					border-radius: 0.25rem;
+					color: colors.$alabaster;
+					background-color: rgba(colors.$alabaster, 0.05);
+					transition: background-color 250ms;
+
+					&:hover {
+						background-color: rgba(colors.$alabaster, 0.1);
+					}
+
+					svg {
+						margin-right: 0.5rem;
+					}
+
+					&.no-results {
+						cursor: default;
+						justify-content: center;
+						color: colors.$silver;
+						font-style: italic;
+					}
+				}
+			}
+		}
+	}
+}
