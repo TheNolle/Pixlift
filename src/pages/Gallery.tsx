@@ -52,6 +52,7 @@ export default function Gallery(): React.ReactElement {
 	const [mediaFilter, setMediaFilter] = React.useState<'all' | 'images' | 'videos'>('all')
 	const [filteredMedia, setFilteredMedia] = React.useState<typeof mockMedia>(mockMedia)
 	const [currentPage, setCurrentPage] = React.useState<number>(1)
+	const [selectedMediaIndex, setSelectedMediaIndex] = React.useState<number | null>(null)
 
 	const searchInputRef = React.useRef<HTMLInputElement>(null)
 
@@ -66,11 +67,13 @@ export default function Gallery(): React.ReactElement {
 				event.preventDefault()
 				setIsSearchOpen(true)
 				setTimeout(() => searchInputRef.current?.focus(), 100)
+			} else if (!isSearchOpen) {
+				handleArrowNavigation(event)
 			}
 		}
 		document.addEventListener('keydown', handleKeyDown)
 		return () => document.removeEventListener('keydown', handleKeyDown)
-	}, [])
+	}, [previewMedia, isSearchOpen, filteredMedia, selectedMediaIndex, currentPage])
 
 	React.useEffect(() => {
 		const query = searchQuery.toLowerCase()
@@ -78,7 +81,40 @@ export default function Gallery(): React.ReactElement {
 		const filteredByType = mediaFilter === 'all' ? filteredBySearch : filteredBySearch.filter((media) => mediaFilter === 'images' ? media.type === 'image' : media.type === 'video')
 		setFilteredMedia(filteredByType)
 		setCurrentPage(1)
+		setSelectedMediaIndex(null)
 	}, [searchQuery, mediaFilter])
+
+	const handleArrowNavigation = (event: KeyboardEvent) => {
+		if (filteredMedia.length === 0) return
+
+		let newIndex = selectedMediaIndex ?? -1
+
+		if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+			newIndex++
+			if (newIndex >= paginatedMedia.length) {
+				if (currentPage < totalPages) {
+					setCurrentPage((prev) => prev + 1)
+					newIndex = 0
+				} else {
+					newIndex = paginatedMedia.length - 1
+				}
+			}
+		} else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+			newIndex--
+			if (newIndex < 0) {
+				if (currentPage > 1) {
+					setCurrentPage((prev) => prev - 1)
+					newIndex = ITEMS_PER_PAGE - 1
+				} else {
+					newIndex = 0
+				}
+			}
+		} else if (event.key === 'Enter' && selectedMediaIndex !== null) {
+			setPreviewMedia({ type: paginatedMedia[selectedMediaIndex].type, url: paginatedMedia[selectedMediaIndex].url })
+		}
+
+		setSelectedMediaIndex(newIndex)
+	}
 
 	const handleZoomToggle = (media: { type: string; url: string } | null) => {
 		setPreviewMedia(media)
@@ -137,8 +173,8 @@ export default function Gallery(): React.ReactElement {
 
 			<main>
 				<div className='media-grid'>
-					{paginatedMedia.map((media) => (
-						<div className='media-card' key={media.id} onClick={() => handleZoomToggle({ type: media.type, url: media.url })} title='Click to zoom'>
+					{paginatedMedia.map((media, index) => (
+						<div className={`media-card ${index === selectedMediaIndex ? 'selected' : ''}`} key={media.id} onClick={() => handleZoomToggle({ type: media.type, url: media.url })} title='Click to zoom'>
 							{media.type === 'image' ? <img src={media.url} alt={media.name} /> : <video src={media.url} />}
 							<div className='media-info'>
 								<small>{media.name}</small>

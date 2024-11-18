@@ -111,6 +111,11 @@
 				transform: scale(1.05);
 			}
 
+			&.selected {
+				box-shadow: 0 0 0.5rem colors.$blue-violet;
+				transform: scale(1.1);
+			}
+
 			img,
 			video {
 				width: 100%;
