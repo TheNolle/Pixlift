@@ -13,7 +13,37 @@ const mockMedia = [
 	{ id: 3, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 2' },
 	{ id: 4, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 2' },
 	{ id: 5, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 3' },
+	{ id: 6, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 3' },
+	{ id: 7, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 4' },
+	{ id: 8, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 4' },
+	{ id: 9, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 5' },
+	{ id: 10, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 5' },
+	{ id: 11, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 6' },
+	{ id: 12, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 6' },
+	{ id: 13, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 7' },
+	{ id: 14, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 7' },
+	{ id: 15, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 8' },
+	{ id: 16, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 8' },
+	{ id: 17, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 9' },
+	{ id: 18, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 9' },
+	{ id: 19, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 10' },
+	{ id: 20, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 10' },
+	{ id: 21, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 11' },
+	{ id: 22, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 11' },
+	{ id: 23, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 12' },
+	{ id: 24, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 12' },
+	{ id: 25, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 13' },
+	{ id: 26, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 13' },
+	{ id: 27, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 14' },
+	{ id: 28, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 14' },
+	{ id: 29, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 15' },
+	{ id: 30, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 15' },
+	{ id: 31, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 16' },
+	{ id: 32, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 16' },
+	{ id: 33, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 17' },
 ]
+
+const ITEMS_PER_PAGE = 24
 
 export default function Gallery(): React.ReactElement {
 	const [previewMedia, setPreviewMedia] = React.useState<{ type: string; url: string } | null>(null)
@@ -21,6 +51,7 @@ export default function Gallery(): React.ReactElement {
 	const [searchQuery, setSearchQuery] = React.useState<string>('')
 	const [mediaFilter, setMediaFilter] = React.useState<'all' | 'images' | 'videos'>('all')
 	const [filteredMedia, setFilteredMedia] = React.useState<typeof mockMedia>(mockMedia)
+	const [currentPage, setCurrentPage] = React.useState<number>(1)
 
 	const searchInputRef = React.useRef<HTMLInputElement>(null)
 
@@ -46,6 +77,7 @@ export default function Gallery(): React.ReactElement {
 		const filteredBySearch = mockMedia.filter((media) => media.name.toLowerCase().includes(query))
 		const filteredByType = mediaFilter === 'all' ? filteredBySearch : filteredBySearch.filter((media) => mediaFilter === 'images' ? media.type === 'image' : media.type === 'video')
 		setFilteredMedia(filteredByType)
+		setCurrentPage(1)
 	}, [searchQuery, mediaFilter])
 
 	const handleZoomToggle = (media: { type: string; url: string } | null) => {
@@ -86,6 +118,9 @@ export default function Gallery(): React.ReactElement {
 		}
 	}, [isSearchOpen])
 
+	const totalPages = Math.ceil(filteredMedia.length / ITEMS_PER_PAGE)
+	const paginatedMedia = filteredMedia.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+
 	return (
 		<div className='page gallery'>
 			<header className='header'>
@@ -102,12 +137,21 @@ export default function Gallery(): React.ReactElement {
 
 			<main>
 				<div className='media-grid'>
-					{filteredMedia.map((media) => (
+					{paginatedMedia.map((media) => (
 						<div className='media-card' key={media.id} onClick={() => handleZoomToggle({ type: media.type, url: media.url })} title='Click to zoom'>
 							{media.type === 'image' ? <img src={media.url} alt={media.name} /> : <video src={media.url} />}
-							<div className='media-info'><small>{media.name}</small></div>
+							<div className='media-info'>
+								<small>{media.name}</small>
+								{media.type === 'video' && <Fa6.FaPlay className='play-icon' />}
+							</div>
 						</div>
 					))}
+				</div>
+
+				<div className='pagination'>
+					<button disabled={currentPage === 1} onClick={() => setCurrentPage((prev) => prev - 1)} className='pagination-btn'><Fa6.FaArrowLeft /> Prev</button>
+					<span>Page {currentPage} of {totalPages}</span>
+					<button disabled={currentPage === totalPages} onClick={() => setCurrentPage((prev) => prev + 1)} className='pagination-btn'>Next <Fa6.FaArrowRight /></button>
 				</div>
 			</main>
 
