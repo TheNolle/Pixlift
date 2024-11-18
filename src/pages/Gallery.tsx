@@ -6,8 +6,15 @@ import '../styles/pages/gallery.scss'
 import { Link } from 'react-router-dom'
 import * as Fa6 from 'react-icons/fa6'
 
+interface Media {
+	id: number
+	type: string
+	url: string
+	name: string
+}
+
 // Mock Data
-const mockMedia = [
+const mockMedia: Media[] = [
 	{ id: 1, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 1' },
 	{ id: 2, type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', name: 'Sample Video 1' },
 	{ id: 3, type: 'image', url: 'https://via.placeholder.com/150', name: 'Sample Image 2' },
@@ -50,9 +57,10 @@ export default function Gallery(): React.ReactElement {
 	const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false)
 	const [searchQuery, setSearchQuery] = React.useState<string>('')
 	const [mediaFilter, setMediaFilter] = React.useState<'all' | 'images' | 'videos'>('all')
-	const [filteredMedia, setFilteredMedia] = React.useState<typeof mockMedia>(mockMedia)
+	const [filteredMedia, setFilteredMedia] = React.useState<Media[]>(mockMedia)
 	const [currentPage, setCurrentPage] = React.useState<number>(1)
 	const [selectedMediaIndex, setSelectedMediaIndex] = React.useState<number | null>(null)
+	const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
 	const searchInputRef = React.useRef<HTMLInputElement>(null)
 
@@ -79,9 +87,13 @@ export default function Gallery(): React.ReactElement {
 		const query = searchQuery.toLowerCase()
 		const filteredBySearch = mockMedia.filter((media) => media.name.toLowerCase().includes(query))
 		const filteredByType = mediaFilter === 'all' ? filteredBySearch : filteredBySearch.filter((media) => mediaFilter === 'images' ? media.type === 'image' : media.type === 'video')
-		setFilteredMedia(filteredByType)
-		setCurrentPage(1)
-		setSelectedMediaIndex(null)
+		setIsLoading(true)
+		setTimeout(() => {
+			setFilteredMedia(filteredByType)
+			setCurrentPage(1)
+			setSelectedMediaIndex(null)
+			setIsLoading(false)
+		}, 500)
 	}, [searchQuery, mediaFilter])
 
 	const handleArrowNavigation = (event: KeyboardEvent) => {
@@ -172,23 +184,41 @@ export default function Gallery(): React.ReactElement {
 			</div>
 
 			<main>
-				<div className='media-grid'>
-					{paginatedMedia.map((media, index) => (
-						<div className={`media-card ${index === selectedMediaIndex ? 'selected' : ''}`} key={media.id} onClick={() => handleZoomToggle({ type: media.type, url: media.url })} title='Click to zoom'>
-							{media.type === 'image' ? <img src={media.url} alt={media.name} /> : <video src={media.url} />}
-							<div className='media-info'>
-								<small>{media.name}</small>
-								{media.type === 'video' && <Fa6.FaPlay className='play-icon' />}
+				{isLoading ? (
+					<div className='loading-indicator'>
+						<Fa6.FaSpinner className='spinner' />
+						<p>Loading media...</p>
+					</div>
+				) : (
+					<>
+						{filteredMedia.length === 0 ? (
+							<div className='empty-state'>
+								<Fa6.FaImage className='empty-icon' />
+								<p>No media found. Try adjusting your filters or search query.</p>
 							</div>
-						</div>
-					))}
-				</div>
+						) : (
+							<>
+										<div className='media-grid'>
+											{paginatedMedia.map((media, index) => (
+												<div className={`media-card ${index === selectedMediaIndex ? 'selected' : ''}`} key={media.id} onClick={() => handleZoomToggle({ type: media.type, url: media.url })} title='Click to zoom'>
+													{media.type === 'image' ? <img src={media.url} alt={media.name} /> : <video src={media.url} />}
+													<div className='media-info'>
+														<small>{media.name}</small>
+														{media.type === 'video' && <Fa6.FaPlay className='play-icon' />}
+													</div>
+												</div>
+											))}
+										</div>
 
-				<div className='pagination'>
-					<button disabled={currentPage === 1} onClick={() => setCurrentPage((prev) => prev - 1)} className='pagination-btn'><Fa6.FaArrowLeft /> Prev</button>
-					<span>Page {currentPage} of {totalPages}</span>
-					<button disabled={currentPage === totalPages} onClick={() => setCurrentPage((prev) => prev + 1)} className='pagination-btn'>Next <Fa6.FaArrowRight /></button>
-				</div>
+										<div className='pagination'>
+											<button disabled={currentPage === 1} onClick={() => setCurrentPage((prev) => prev - 1)} className='pagination-btn'><Fa6.FaArrowLeft /> Prev</button>
+											<span>Page {currentPage} of {totalPages}</span>
+											<button disabled={currentPage === totalPages} onClick={() => setCurrentPage((prev) => prev + 1)} className='pagination-btn'>Next <Fa6.FaArrowRight /></button>
+										</div>
+							</>
+						)}
+					</>
+				)}
 			</main>
 
 			{previewMedia && (

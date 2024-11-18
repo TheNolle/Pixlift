@@ -86,6 +86,54 @@
 		}
 	}
 
+	.loading-indicator {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		margin-top: 3rem;
+		color: colors.$silver;
+
+		.spinner {
+			font-size: 2rem;
+			animation: spin 1s linear infinite;
+		}
+
+		p {
+			margin-top: 1rem;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	}
+
+	.empty-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		margin-top: 3rem;
+		color: colors.$silver;
+
+		.empty-icon {
+			font-size: 3rem;
+			margin-bottom: 1rem;
+		}
+
+		p {
+			font-size: 1.125rem;
+		}
+	}
+
 	.media-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, 200px);
