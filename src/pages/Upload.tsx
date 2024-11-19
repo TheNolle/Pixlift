@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 import '../styles/pages/upload.scss'
 
@@ -52,6 +53,45 @@ const getFileIcon = (file: File): React.ReactNode => {
 	}
 }
 
+const isValidURL = async (url: string): Promise<boolean> => {
+	try {
+		const validURL = new URL(url)
+		const validProtocol = /^(http|https):/.test(validURL.protocol)
+		if (!validProtocol) return false
+		const validHost = /^(localhost|127\.0\.0\.1|(\d{1,3}\.){3}\d{1,3})$/.test(validURL.hostname) || await axios.head(url).then(() => true).catch(() => false)
+		if (!validHost) return false
+		const headers = await axios.head(url)
+		const validContentType = headers.headers['content-type'].startsWith('image/') || headers.headers['content-type'].startsWith('video/')
+		if (!validContentType) return false
+		const validContentLength = parseInt(headers.headers['content-length']) <= MAX_FILE_SIZE_MB * 1024 * 1024
+		if (!validContentLength) return false
+		return true
+	} catch {
+		return false
+	}
+}
+
+const fetchURLasFile = async (url: string): Promise<File | null> => {
+	try {
+		const response = await axios.get(url)
+		if (response.status < 200 || response.status >= 300) {
+			alert(`Could not fetch the file from the URL: ${url}`)
+			return null
+		}
+		const contentType = response.headers['content-type']
+		if (!contentType || (!contentType.startsWith('image/') && !contentType.startsWith('video/'))) {
+			alert(`The URL does not point to a supported file type: ${url}`)
+			return null
+		}
+		const blob = new Blob([response.data], { type: contentType })
+		const fileName = url.split('/').pop()?.trim() || `file_${Date.now()}`
+		return new File([blob], generateRandomName(fileName), { type: blob.type })
+	} catch (error: any) {
+		alert(`An error occurred while fetching the URL: ${error.message}`)
+		return null
+	}
+}
+
 export default function Upload(): React.ReactElement {
 	const [files, setFiles] = React.useState<File[]>([])
 	const [privacy, setPrivacy] = React.useState<'public' | 'private' | 'password-protected'>('private')
@@ -64,8 +104,34 @@ export default function Upload(): React.ReactElement {
 		document.title = 'Upload Media | Pixlift'
 
 		const handleKeyDown = (event: KeyboardEvent) => event.key === 'Escape' && setPreviewFile(null)
+		const handlePaste = async (event: ClipboardEvent) => {
+			const clipboardText = event.clipboardData?.getData('Text')
+			if (clipboardText && await isValidURL(clipboardText)) {
+				const file = await fetchURLasFile(clipboardText)
+				if (file) handleFileProcessing([file])
+			} else {
+				const items = event.clipboardData?.items
+				if (items) {
+					const pastedFiles: File[] = []
+					for (const item of items) {
+						if (item.kind === 'file') {
+							const file = item.getAsFile()
+							if (file) pastedFiles.push(file)
+						}
+					}
+					if (pastedFiles.length > 0) {
+						handleFileProcessing(pastedFiles)
+					}
+				}
+			}
+		}
+
 		document.addEventListener('keydown', handleKeyDown)
-		return () => document.removeEventListener('keydown', handleKeyDown)
+		document.addEventListener('paste', handlePaste)
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown)
+			document.removeEventListener('paste', handlePaste)
+		}
 	}, [])
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +158,14 @@ export default function Upload(): React.ReactElement {
 			validFiles.splice(MAX_FILES - files.length)
 		}
 
-		setFiles(validFiles)
+		setFiles((previousFiles) => {
+			const newFiles = [...previousFiles, ...validFiles]
+			if (newFiles.length > MAX_FILES) {
+				alert(`You can upload a maximum of ${MAX_FILES} files. The excess files were ignored.`)
+				return newFiles.slice(0, MAX_FILES)
+			}
+			return newFiles
+		})
 	}
 
 	const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -112,8 +185,7 @@ export default function Upload(): React.ReactElement {
 		event.stopPropagation()
 		setDragActive(false)
 		if (event.dataTransfer.files) {
-			const droppedFiles = Array.from(event.dataTransfer.files)
-			setFiles(droppedFiles)
+			handleFileProcessing(Array.from(event.dataTransfer.files))
 		}
 	}
 
