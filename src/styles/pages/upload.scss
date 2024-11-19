@@ -283,28 +283,28 @@
 						}
 					}
 				}
-			}
 
-			.upload-btn {
-				cursor: pointer;
-				display: flex;
-				justify-content: center;
-				column-gap: 0.5rem;
-				padding: 1rem;
-				font-size: 1rem;
-				letter-spacing: 0.1rem;
-				border-radius: 0.25rem;
-				color: colors.$alabaster;
-				background-color: colors.$steel-gray;
-				transition: color 250ms, background-color 250ms;
+				.upload-btn {
+					cursor: pointer;
+					display: flex;
+					justify-content: center;
+					column-gap: 0.5rem;
+					padding: 1rem;
+					font-size: 1rem;
+					letter-spacing: 0.1rem;
+					border-radius: 0.25rem;
+					color: colors.$alabaster;
+					background-color: colors.$steel-gray;
+					transition: color 250ms, background-color 250ms;
 
-				&:hover {
-					background-color: colors.$mid-gray;
-				}
+					&:hover {
+						background-color: colors.$mid-gray;
+					}
 
-				&:active {
-					color: colors.$bunker;
-					background-color: colors.$silver;
+					&:active {
+						color: colors.$bunker;
+						background-color: colors.$silver;
+					}
 				}
 			}
 		}

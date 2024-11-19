@@ -269,9 +269,9 @@ export default function Upload(): React.ReactElement {
 								</label>
 							</div>
 						)}
-					</div>
 
-					<button type='button' className='upload-btn' onClick={handleUpload}>Upload <Fa6.FaArrowUpFromBracket /></button>
+						<button type='button' className='upload-btn' onClick={handleUpload}>Upload <Fa6.FaArrowUpFromBracket /></button>
+					</div>
 				</form>
 			</main>
 
