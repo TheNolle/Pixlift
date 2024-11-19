@@ -14,6 +14,7 @@ import Legal from './pages/legal/Legal'
 import PrivacyPolicy from './pages/legal/PrivacyPolicy'
 import TermsOfService from './pages/legal/TermsOfService'
 import Disclaimer from './pages/legal/Disclaimer'
+import QnA from './pages/legal/QnA'
 
 export default function App(): React.ReactElement {
 	return (
@@ -29,6 +30,7 @@ export default function App(): React.ReactElement {
 				<Route path='/legal/privacy-policy' element={<PrivacyPolicy />} />
 				<Route path='/legal/terms-of-service' element={<TermsOfService />} />
 				<Route path='/legal/disclaimer' element={<Disclaimer />} />
+				<Route path='/legal/qna' element={<QnA />} />
 				<Route path='*' element={<Error errorCode={404} errorMessage='Page not found' errorDetails='The page you are looking for does not exist' />} />
 			</Routes>
 		</BrowserRouter>
