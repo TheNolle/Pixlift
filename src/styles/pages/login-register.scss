@@ -77,11 +77,11 @@
 			color: colors.$spun-pearl;
 
 			a {
-				color: colors.$silver;
+				color: colors.$perfume;
 				transition: color 250ms;
 
 				&:hover {
-					color: colors.$mid-gray;
+					color: colors.$blue-marguerite;
 				}
 			}
 		}
@@ -101,7 +101,7 @@
 				transition: border-color 250ms;
 
 				&:focus {
-					border-color: colors.$alabaster;
+					border-color: colors.$blue-marguerite;
 				}
 			}
 
@@ -115,15 +115,15 @@
 				font-size: 1rem;
 				border-radius: 0.25rem;
 				color: colors.$alabaster;
-				background-color: colors.$steel-gray;
+				background-color: colors.$biloba-flower;
 				transition: background-color 250ms;
 
 				&:hover {
-					background-color: colors.$mid-gray;
+					background-color: colors.$blue-marguerite;
 				}
 
 				&:active {
-					background-color: colors.$silver;
+					background-color: colors.$true-v;
 				}
 			}
 		}
