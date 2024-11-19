@@ -3,7 +3,7 @@
 .page.login-register {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	background-color: colors.$steel-gray;
+	background-color: colors.$bunker;
 
 	.left {
 		position: relative;
@@ -77,11 +77,11 @@
 			color: colors.$spun-pearl;
 
 			a {
-				color: colors.$perfume;
+				color: colors.$silver;
 				transition: color 250ms;
 
 				&:hover {
-					color: colors.$biloba-flower;
+					color: colors.$mid-gray;
 				}
 			}
 		}
@@ -101,7 +101,7 @@
 				transition: border-color 250ms;
 
 				&:focus {
-					border-color: colors.$east-side;
+					border-color: colors.$alabaster;
 				}
 			}
 
@@ -114,19 +114,16 @@
 				padding: 1rem;
 				font-size: 1rem;
 				border-radius: 0.25rem;
-				border: 1px solid transparent;
 				color: colors.$alabaster;
-				background-color: colors.$blue-violet;
-				transition: border-color 250ms, background-color 250ms;
+				background-color: colors.$steel-gray;
+				transition: background-color 250ms;
 
 				&:hover {
-					border-color: colors.$east-side;
-					background-color: colors.$blue-marguerite;
+					background-color: colors.$mid-gray;
 				}
 
 				&:active {
-					border-color: colors.$blue-marguerite;
-					background-color: colors.$studio;
+					background-color: colors.$silver;
 				}
 			}
 		}
