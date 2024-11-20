@@ -91,28 +91,6 @@ export default function About(): React.ReactElement {
 						collapsible
 					/>
 					<Section
-						sectionTitle='FAQ (Frequently Asked Questions)'
-						sectionContent={<>
-							<Section
-								sectionTitle='Q: What is Pixlift?'
-								sectionContent="A: Pixlift is a media hosting and sharing platform designed for creators, developers, and enthusiasts. Our platform allows you to upload, transform, and share images and videos with ease."
-							/>
-							<Section
-								sectionTitle='Q: Is Pixlift free to use?'
-								sectionContent="A: Yes, Pixlift is completely free to use. You can upload, transform, and share media without any cost."
-							/>
-							<Section
-								sectionTitle='Q: What types of media can I upload?'
-								sectionContent="A: You can upload images (e.g., JPG, PNG, GIF) and videos (e.g., MP4) to Pixlift. We support a wide range of formats and file types."
-							/>
-							<Section
-								sectionTitle='Q: How is my data secured?'
-								sectionContent="A: Pixlift takes security seriously. We use encryption, firewalls, and other security measures to protect your data. We also do not share your personal information with third parties."
-							/>
-						</>}
-						collapsible
-					/>
-					<Section
 						sectionTitle='Privacy Settings'
 						sectionContent={<>
 							<p>Privacy is important to us. Pixlift offers the following privacy settings:</p>

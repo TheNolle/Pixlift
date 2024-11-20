@@ -1,0 +1,109 @@
+@use '../../colors' as colors;
+
+.page.legal {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	grid-row-gap: 1rem;
+	padding: 1rem;
+	background-color: colors.$bunker;
+
+	.header {
+		display: grid;
+		align-items: center;
+		justify-content: space-between;
+		grid-template-columns: 1fr auto;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		background-color: rgba(colors.$alabaster, 0.1);
+		background-image: url('/mojave.jpeg');
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+
+		.back-btn {
+			width: fit-content;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			column-gap: 0.5rem;
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			text-decoration: none;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+
+			&:hover {
+				background-color: rgba(colors.$alabaster, 0.25);
+			}
+
+			&:active {
+				background-color: rgba(colors.$alabaster, 0.375);
+			}
+		}
+
+		h1 {
+			font-size: 2rem;
+			color: colors.$alabaster;
+		}
+	}
+
+	main {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		background-color: colors.$bunker;
+
+		.legal-card {
+			width: 100%;
+			max-width: 400px;
+			height: 100%;
+			max-height: 400px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-between;
+			padding: 1rem;
+			text-decoration: none;
+			border-radius: 0.5rem;
+			border: 1px solid colors.$alabaster;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+			transition: box-shadow 0.3s;
+
+			&:hover {
+				box-shadow: 0 0 10px rgba(colors.$alabaster, 0.5);
+			}
+
+			h2 {
+				font-size: 2rem;
+				font-weight: 700;
+			}
+
+			p {
+				width: 100%;
+				padding: 1rem 0.5rem;
+				text-align: center;
+				border-radius: 0.5rem;
+				color: colors.$alabaster;
+				background-color: colors.$bunker;
+				transition: color 0.3s, background-color 0.3s;
+
+				&:hover {
+					color: colors.$bunker;
+					background-color: colors.$alabaster;
+				}
+			}
+
+			small {
+				width: 100%;
+				padding: 0.5rem;
+				font-size: 0.8rem;
+				border-radius: 0.5rem;
+				color: colors.$alabaster;
+				background-color: rgba(colors.$bunker, 0.5);
+			}
+		}
+	}
+}

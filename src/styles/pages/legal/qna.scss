@@ -1,0 +1,91 @@
+@use '../../colors' as colors;
+
+.page.qna {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	row-gap: 1rem;
+	padding: 1rem;
+	background-color: colors.$bunker;
+
+	.header {
+		display: grid;
+		align-items: center;
+		justify-content: space-between;
+		grid-template-columns: 1fr auto;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		background-color: rgba(colors.$alabaster, 0.1);
+		background-image: url('/mojave.jpeg');
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+
+		.back-btn {
+			width: fit-content;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			column-gap: 0.5rem;
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			text-decoration: none;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+
+			&:hover {
+				background-color: rgba(colors.$alabaster, 0.25);
+			}
+
+			&:active {
+				background-color: rgba(colors.$alabaster, 0.375);
+			}
+		}
+
+		h1 {
+			font-size: 2rem;
+			color: colors.$alabaster;
+		}
+	}
+
+	main {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		row-gap: 0.5rem;
+
+		details {
+			width: 100%;
+			padding: 1rem;
+			border-radius: 0.5rem;
+			background-color: rgba(colors.$alabaster, 0.1);
+			transition: background-color 0.25s;
+
+			&:hover,
+			&:focus-within {
+				background-color: rgba(colors.$alabaster, 0.15);
+			}
+
+			&[open] {
+				background-color: rgba(colors.$alabaster, 0.20);
+			}
+
+			summary {
+				cursor: pointer;
+				font-size: 1.25rem;
+				color: colors.$alabaster;
+				transition: color 0.25s;
+
+				&:hover {
+					color: colors.$silver;
+				}
+			}
+
+			p {
+				margin-top: 1rem;
+				font-size: 1rem;
+				color: colors.$alabaster;
+			}
+		}
+	}
+}

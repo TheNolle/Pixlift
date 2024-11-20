@@ -1,0 +1,126 @@
+@use '../../colors' as colors;
+
+.page.terms-of-service {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	row-gap: 1rem;
+	padding: 1rem;
+	background-color: colors.$bunker;
+
+	.header {
+		display: grid;
+		align-items: center;
+		justify-content: space-between;
+		grid-template-columns: 1fr auto;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		background-color: rgba(colors.$alabaster, 0.1);
+		background-image: url('/mojave.jpeg');
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+
+		.back-btn {
+			width: fit-content;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			column-gap: 0.5rem;
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			text-decoration: none;
+			color: colors.$alabaster;
+			background-color: rgba(colors.$alabaster, 0.1);
+
+			&:hover {
+				background-color: rgba(colors.$alabaster, 0.25);
+			}
+
+			&:active {
+				background-color: rgba(colors.$alabaster, 0.375);
+			}
+		}
+
+		h1 {
+			font-size: 2rem;
+			color: colors.$alabaster;
+		}
+	}
+
+	main {
+		display: flex;
+		flex-direction: column;
+		row-gap: 0.5rem;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		background-color: rgba(colors.$alabaster, 0.1);
+
+		h1 {
+			font-size: 2.5rem;
+			color: colors.$alabaster;
+		}
+
+		small {
+			font-size: 0.75rem;
+			color: colors.$silver;
+
+			b {
+				margin-bottom: 0.5rem;
+				color: colors.$alabaster;
+			}
+		}
+
+		section {
+			display: flex;
+			flex-direction: column;
+			row-gap: 0.5rem;
+
+			&:last-of-type {
+				margin-bottom: 1rem;
+			}
+
+			h2 {
+				margin-top: 1.5rem;
+				font-size: 1.5rem;
+				color: colors.$alabaster;
+			}
+
+			p {
+				font-size: 1rem;
+				color: colors.$alabaster;
+			}
+
+			a {
+				text-decoration: none;
+				color: colors.$perfume;
+				transition: color 0.2s;
+
+				&:hover {
+					color: colors.$biloba-flower;
+				}
+			}
+
+			ul {
+				display: flex;
+				flex-direction: column;
+				row-gap: 0.125rem;
+				margin-left: 1rem;
+
+				li {
+					margin-left: 1rem;
+				}
+			}
+
+			ol {
+				display: flex;
+				flex-direction: column;
+				row-gap: 0.125rem;
+				margin-left: 1rem;
+
+				li {
+					list-style: none;
+				}
+			}
+		}
+	}
+}
